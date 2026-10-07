@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="An AI-native commerce agent that understands intent, shops across commerce, recommends, completes purchases and intelligently manages unused money." />
+  <title>IntentFlow — AI Commerce, Reimagined</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#07100d; --bg2:#0b1713; --panel:#0d1b16; --line:rgba(255,255,255,.09);
+      --text:#f4f7f5; --muted:#9eaca5; --green:#b9ff5c; --green2:#6ee7a8;
+      --white:#fff; --max:1180px; --radius:24px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:"DM Sans",sans-serif;background:radial-gradient(circle at 80% 5%,rgba(185,255,92,.09),transparent 28%),var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(var(--max),calc(100% - 40px));margin:auto}
+    nav{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(7,16,13,.78);backdrop-filter:blur(18px);z-index:20}
+    .navin{width:min(var(--max),calc(100% - 40px));margin:auto;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;font-family:"Space Grotesk";font-weight:700;letter-spacing:-.04em;font-size:20px}
+    .logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--green),#77e8b0);display:grid;place-items:center;color:#07100d;font-weight:900}
+    .navlinks{display:flex;gap:28px;color:#b9c3be;font-size:14px}
+    .navlinks a:hover{color:white}
+    .navcta{padding:11px 17px;border:1px solid var(--line);border-radius:999px;font-weight:600;font-size:14px}
+    .hero{padding:105px 0 80px;position:relative}
+    .glow{position:absolute;width:500px;height:500px;border-radius:50%;background:rgba(185,255,92,.07);filter:blur(100px);right:-200px;top:0;pointer-events:none}
+    .eyebrow{display:inline-flex;gap:8px;align-items:center;border:1px solid rgba(185,255,92,.22);background:rgba(185,255,92,.05);padding:7px 12px;border-radius:999px;color:#d8f8b1;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+    .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 15px var(--green)}
+    h1{font-family:"Space Grotesk";font-size:clamp(52px,8vw,96px);line-height:.98;letter-spacing:-.065em;max-width:950px;margin:25px 0}
+    .gradient{background:linear-gradient(90deg,#fff 15%,var(--green) 75%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p{font-size:19px;color:var(--muted);max-width:720px}
+    .actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+    .btn{padding:14px 21px;border-radius:12px;font-weight:700;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);transition:.2s}
+    .btn:hover{transform:translateY(-2px)}
+    .primary{background:var(--green);color:#07100d;border-color:var(--green)}
+    .secondary{background:rgba(255,255,255,.035)}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:35px;align-items:end}
+    .terminal{background:linear-gradient(145deg,#10231a,#08100d);border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 25px 70px rgba(0,0,0,.3);margin-top:30px}
+    .termbar{display:flex;gap:6px;margin-bottom:18px}.termbar i{width:8px;height:8px;border-radius:50%;background:#34443d}
+    .chat{display:grid;gap:12px;font-size:13px}.bubble{padding:12px 14px;border-radius:13px;max-width:90%}.user{background:#172820;justify-self:end;color:#dbe6e0}.agent{background:rgba(185,255,92,.08);border:1px solid rgba(185,255,92,.12);color:#d9f7bc}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0;margin-top:30px;gap:20px}
+    .stat strong{font-family:"Space Grotesk";font-size:28px}.stat span{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+    section{padding:105px 0}.section-head{max-width:720px;margin-bottom:45px}.kicker{color:var(--green);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.13em}.section-head h2{font-family:"Space Grotesk";font-size:clamp(36px,5vw,58px);line-height:1.05;letter-spacing:-.055em;margin:12px 0}.section-head p{color:var(--muted);font-size:17px}
+    .problem{display:grid;grid-template-columns:1fr 1fr;gap:18px}.card{background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018));border:1px solid var(--line);border-radius:var(--radius);padding:28px}.card h3{font-family:"Space Grotesk";font-size:22px;margin:12px 0 8px}.card p{color:var(--muted)}.icon{font-size:25px}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.step{position:relative}.num{font-family:"Space Grotesk";color:var(--green);font-size:13px}.step h3{margin-top:25px;font-size:19px}.step p{color:var(--muted);font-size:14px;margin-top:8px}
+    .agentflow{display:grid;grid-template-columns:1fr 1fr;gap:20px}.flow{display:flex;flex-direction:column;gap:10px}.flowrow{display:flex;align-items:center;gap:10px}.node{flex:1;padding:15px;border:1px solid var(--line);background:#0d1915;border-radius:13px}.arrow{color:var(--green)}
+    .arch{background:#08130f;border:1px solid var(--line);border-radius:28px;padding:32px;overflow:auto}.arch pre{font:13px/1.8 ui-monospace,SFMono-Regular,Menlo,monospace;color:#b9c7c0;min-width:780px}.hi{color:var(--green)}
+    .roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.phase{padding:24px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.025)}.phase b{color:var(--green);font-size:12px}.phase h3{margin:10px 0;font-family:"Space Grotesk"}.phase li{list-style:none;color:var(--muted);font-size:13px;margin:7px 0}.phase li:before{content:"→ ";color:#668078}
+    .vision{background:linear-gradient(135deg,rgba(185,255,92,.11),rgba(110,231,168,.035));border:1px solid rgba(185,255,92,.16);border-radius:30px;padding:55px}.vision h2{font-family:"Space Grotesk";font-size:clamp(38px,5vw,62px);letter-spacing:-.06em;line-height:1.05;max-width:800px}.vision p{color:#b7c4bd;max-width:720px;margin-top:18px;font-size:17px}
+    .invest{display:grid;grid-template-columns:1fr 1fr;gap:20px}.bullet{display:flex;gap:12px;margin:17px 0}.check{width:23px;height:23px;border-radius:50%;background:rgba(185,255,92,.12);color:var(--green);display:grid;place-items:center;font-size:12px;flex:none}
+    form{display:grid;gap:12px}input,textarea,select{width:100%;padding:14px 15px;border-radius:12px;border:1px solid var(--line);background:#08130f;color:white;font:inherit;outline:none}input:focus,textarea:focus,select:focus{border-color:rgba(185,255,92,.5)}textarea{min-height:120px;resize:vertical}
+    footer{border-top:1px solid var(--line);padding:35px 0;color:#82908a;font-size:13px}.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.mini{display:flex;gap:18px}
+    .reveal{opacity:0;transform:translateY(20px);transition:.7s ease}.reveal.show{opacity:1;transform:none}
+    @media(max-width:900px){.hero-grid,.problem,.agentflow,.invest{grid-template-columns:1fr}.steps,.roadmap{grid-template-columns:1fr 1fr}.navlinks{display:none}.hero{padding-top:75px}}
+    @media(max-width:560px){.container,.navin{width:min(100% - 28px,1180px)}.steps,.roadmap,.stats{grid-template-columns:1fr}.hero{padding:65px 0}.vision{padding:30px}.card{padding:22px}section{padding:75px 0}h1{font-size:54px}}
+  </style>
+</head>
+<body>
+<nav><div class="navin">
+  <a class="brand" href="#"><span class="logo">I</span> AgentRAZZ</a>
+  <div class="navlinks"><a href="#product">Product</a><a href="#how">How it works</a><a href="#architecture">Technology</a><a href="#roadmap">Roadmap</a><a href="#invest">Invest</a></div>
+  <a class="navcta" href="#contact">Talk to us</a>
+</div></nav>
+
+<main>
+<section class="hero"><div class="glow"></div><div class="container">
+  <div class="hero-grid">
+    <div>
+      <!-- <span class="eyebrow"><span class="dot"></span> AI-native commerce infrastructure</span> -->
+      <h1>Tell us what you need. <span class="gradient">We handle the shopping.</span></h1>
+      <p>IntentFlow is building an autonomous commerce agent that understands natural language, searches across commerce, compares products, recommends the right option, completes purchases with user approval — and intelligently manages the money left over.</p>
+      <div class="actions"><a class="btn primary" href="#invest">Explore the vision →</a><a class="btn secondary" href="#product">See how it works</a></div>
+    </div>
+    <div class="terminal">
+      <div class="termbar"><i></i><i></i><i></i></div>
+      <div class="chat">
+        <div class="bubble user">“Mujhe ₹2,000 ke andar running ke liye achhe shoes chahiye.”</div>
+        <div class="bubble agent">Understanding your goal… searching multiple commerce sources… comparing fit, price, reviews and specs.</div>
+        <div class="bubble agent">Best match: ₹1,720. You save ₹280. Want me to place the order?</div>
+        <div class="bubble user">Yes, order it.</div>
+        <div class="bubble agent">Order confirmed. ₹280 remains in your IntentFlow balance.</div>
+      </div>
+    </div>
+  </div>
+  <div class="stats"><div class="stat"><strong>Intent → Action</strong><span>Natural language becomes an executable shopping journey.</span></div><div class="stat"><strong>Multi-commerce</strong><span>Search, compare and rank across commerce sources.</span></div><div class="stat"><strong>Unused money</strong><span>Purchase leftovers become a structured savings layer.</span></div></div>
+</div></section>
+
+<section id="product"><div class="container">
+  <div class="section-head reveal"><span class="kicker">The problem</span><h2>Commerce is still built around the search box.</h2><p>People know what they want, but today's shopping journey makes them do the work: search, open tabs, compare, evaluate, cart, checkout and repeat.</p></div>
+  <div class="problem">
+    <div class="card reveal"><div class="icon">⌕</div><h3>Too much manual effort</h3><p>Users spend time searching across platforms, reading reviews, checking specifications and deciding between dozens of similar products.</p></div>
+    <div class="card reveal"><div class="icon">◎</div><h3>Money disappears after checkout</h3><p>If a user planned ₹2,000 and spends ₹1,720, the remaining ₹280 usually has no intelligent journey. We want to change that.</p></div>
+  </div>
+</div></section>
+
+<section id="how"><div class="container">
+  <div class="section-head reveal"><span class="kicker">The new journey</span><h2>From shopping website to shopping agent.</h2><p>The user expresses intent. The agent coordinates the rest — while keeping the user in control of important decisions.</p></div>
+  <div class="steps">
+    <div class="card step reveal"><span class="num">01</span><h3>Understand</h3><p>Text or voice input becomes a structured shopping intent: budget, use case, preferences and constraints.</p></div>
+    <div class="card step reveal"><span class="num">02</span><h3>Search</h3><p>Commerce tools discover relevant products across multiple sources instead of forcing one marketplace.</p></div>
+    <div class="card step reveal"><span class="num">03</span><h3>Decide</h3><p>Products are ranked using price, specifications, reviews and user preferences to surface useful choices.</p></div>
+    <div class="card step reveal"><span class="num">04</span><h3>Act</h3><p>The agent prepares the cart, asks for confirmation, completes payment and verifies the order.</p></div>
+  </div>
+</div></section>
+
+<section><div class="container">
+  <div class="section-head reveal"><span class="kicker">Agent experience</span><h2>A human stays in control. The agent does the busy work.</h2></div>
+  <div class="agentflow">
+    <div class="card reveal">
+      <div class="flow">
+        <div class="flowrow"><div class="node">🎤 Voice / Text</div><span class="arrow">→</span><div class="node">Structured intent</div></div>
+        <div class="flowrow"><div class="node">AI planning</div><span class="arrow">→</span><div class="node">Commerce search</div></div>
+        <div class="flowrow"><div class="node">Comparison</div><span class="arrow">→</span><div class="node">Recommendation</div></div>
+        <div class="flowrow"><div class="node">Cart</div><span class="arrow">→</span><div class="node">User confirmation</div></div>
+        <div class="flowrow"><div class="node">Payment</div><span class="arrow">→</span><div class="node">Order verification</div></div>
+      </div>
+    </div>
+    <div class="card reveal">
+      <span class="kicker">After the purchase</span><h3>The unused-money layer</h3>
+      <p>If the purchase costs less than the user's planned budget, the difference is recorded in a savings ledger. Complementary products can be suggested only when relevant and only when the user wants them.</p>
+      <div class="bullet"><span class="check">✓</span><span>No forced upselling.</span></div>
+      <div class="bullet"><span class="check">✓</span><span>User-controlled balance.</span></div>
+      <div class="bullet"><span class="check">✓</span><span>Future pathway toward regulated financial/savings partners, subject to applicable regulation and consent.</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="architecture"><div class="container">
+  <div class="section-head reveal"><span class="kicker">Technology</span><h2>Designed as an agent platform, not another storefront.</h2><p>A modular architecture lets the product evolve from a shopping agent into an intelligent commerce operating layer.</p></div>
+  <div class="arch reveal"><pre>
+<span class="hi">USER</span>
+  │
+  ├── 🎤 Voice
+  └── Text
+        │
+        ▼
+<span class="hi">React Frontend</span>
+        │ WebSocket / API
+        ▼
+<span class="hi">Node + Express API Layer</span>
+        │
+        ▼
+┌───────────────────────────────────────────┐
+│                 AI AGENT                  │
+│  LLM • Planning • Tool Calling • Memory  │
+└────────────────────┬──────────────────────┘
+                     │
+       ┌─────────────┼─────────────┐
+       ▼             ▼             ▼
+ Product Search   Recommendation  Cart / Order
+    Tools            Engine          Tools
+       │             │               │
+ Commerce APIs    Ranking / ML    Commerce APIs
+       └─────────────┬─────────────┘
+                     ▼
+              Payment Gateway
+                     │
+                     ▼
+                Order System
+                     │
+                     ▼
+             Order Verification
+                     │
+                     ▼
+               Savings Ledger
+                     │
+                     ▼
+        Future Financial Partner*
+  *subject to regulation + user consent
+  </pre></div>
+</div></section>
+
+<section id="roadmap"><div class="container">
+  <div class="section-head reveal"><span class="kicker">Build roadmap</span><h2>From prototype to commerce infrastructure.</h2><p>A staged roadmap designed to validate the agent experience first, then expand its capabilities and scale.</p></div>
+  <div class="roadmap">
+    <div class="phase reveal"><b>FOUNDATION</b><h3>0 — 4</h3><ul><li>Project constitution</li><li>MERN foundation</li><li>Modern shopping UI</li><li>Authentication & profiles</li><li>Text shopping agent</li></ul></div>
+    <div class="phase reveal"><b>AGENT CORE</b><h3>5 — 9</h3><ul><li>Structured intent</li><li>Tool calling</li><li>Multi-commerce search</li><li>Recommendation engine</li><li>Cart + human confirmation</li></ul></div>
+    <div class="phase reveal"><b>TRANSACTION LAYER</b><h3>10 — 14</h3><ul><li>Sandbox payments</li><li>Order verification</li><li>Savings / unused-money ledger</li><li>Optional complementary recommendations</li><li>Memory & personalization</li></ul></div>
+    <div class="phase reveal"><b>SCALE</b><h3>15 — 19</h3><ul><li>Security hardening</li><li>Redis + queues</li><li>Realtime scaling</li><li>Testing</li><li>Production deployment & polish</li></ul></div>
+  </div>
+</div></section>
+
+<section><div class="container"><div class="vision reveal">
+  <span class="kicker">Long-term vision</span>
+  <h2>We don't want to build a better marketplace. We want to build the agent that works across marketplaces.</h2>
+  <p>Commerce is moving from interfaces where people operate websites to intelligent agents that operate workflows. IntentFlow is being designed for that transition — with user consent, transparent recommendations and a financial layer that treats leftover purchasing power as something worth managing.</p>
+</div></div></section>
+
+<section id="invest"><div class="container">
+  <div class="section-head reveal"><span class="kicker">For investors</span><h2>A new control layer between human intent and commerce.</h2><p>The opportunity is not another catalog. It is the orchestration layer that understands what a user wants and executes the journey across commerce.</p></div>
+  <div class="invest">
+    <div class="card reveal">
+      <h3>Why this can become infrastructure</h3>
+      <div class="bullet"><span class="check">✓</span><span>AI-native shopping starts with intent rather than product pages.</span></div>
+      <div class="bullet"><span class="check">✓</span><span>Tool-based architecture can connect multiple commerce ecosystems.</span></div>
+      <div class="bullet"><span class="check">✓</span><span>Personal memory can improve recommendations over time.</span></div>
+      <div class="bullet"><span class="check">✓</span><span>The unused-money layer creates a new post-purchase relationship.</span></div>
+    </div>
+    <div class="card reveal" id="contact">
+      <h3>Start a conversation</h3>
+      <p style="margin:5px 0 20px;color:var(--muted)">For investment, partnerships or early product conversations.</p>
+      <form onsubmit="sendMail(event)">
+        <input id="name" placeholder="Your name" required>
+        <input id="email" type="email" placeholder="Work email" required>
+        <select id="type"><option>Investment</option><option>Partnership</option><option>Product / Pilot</option><option>Other</option></select>
+        <textarea id="message" placeholder="Tell us what you'd like to discuss"></textarea>
+        <button class="btn primary" type="submit">Send inquiry →</button>
+      </form>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="container foot"><div>© 2026 IntentFlow Technologies. Building the future of agentic commerce.</div><div class="mini"><a href="#product">Product</a><a href="#architecture">Technology</a><a href="#invest">Invest</a></div></div></footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('show') }), {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  function sendMail(e){
+    e.preventDefault();
+    const n=document.getElementById('name').value, em=document.getElementById('email').value;
+    const t=document.getElementById('type').value, m=document.getElementById('message').value;
+    const body=`Name: ${n}%0AEmail: ${em}%0AType: ${t}%0A%0A${encodeURIComponent(m)}`;
+    window.location.href=`mailto:founders@yourcompany.com?subject=${encodeURIComponent('IntentFlow inquiry — '+t)}&body=${body}`;
+  }
+</script>
+</body>
+</html>
